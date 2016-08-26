@@ -14,7 +14,7 @@
 
     <groupId>com.ofpay.logback</groupId>
     <artifactId>logback-mdc-ttl</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <dependencies>
 
@@ -51,6 +51,6 @@
         <connection>scm:git:${git.url}</connection>
         <developerConnection>scm:git:${git.url}</developerConnection>
         <url>${git.url}</url>
-        <tag>logback-mdc-ttl-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
