@@ -1,3 +1,5 @@
+:point_right: [Transmittable ThreadLocal(TTL)](https://github.com/alibaba/transmittable-thread-local) 在使用线程池等会缓存线程的组件情况下，提供ThreadLocal值的传递功能，解决异步执行时上下文传递的问题。支持JDK 9/8/7/6。
+
 示例：
 
 ## 1.项目依赖
