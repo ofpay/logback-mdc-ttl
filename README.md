@@ -7,7 +7,7 @@
 <dependency>
 	<groupId>com.ofpay</groupId>
 	<artifactId>logback-mdc-ttl</artifactId>
-   <version>1.0.2-SNAPSHOT</version>
+   <version>1.0.2</version>
 </dependency>
 ```
 
