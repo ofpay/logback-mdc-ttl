@@ -9,10 +9,14 @@ import java.util.Map;
 
 /**
  * Created by wuwen on 15/7/31.
- * see ch.qos.logback.classic.util.LogbackMDCAdapter
+ * Copy from ch.qos.logback.classic.util.LogbackMDCAdapter
+ * @see ch.qos.logback.classic.util.LogbackMDCAdapter
  */
 public class TtlMDCAdapter implements MDCAdapter {
 
+    /**
+     * use com.alibaba.ttl.TransmittableThreadLocal
+     */
     final ThreadLocal<Map<String, String>> copyOnInheritThreadLocal = new TransmittableThreadLocal<>();
 
     private static final int WRITE_OPERATION = 1;
