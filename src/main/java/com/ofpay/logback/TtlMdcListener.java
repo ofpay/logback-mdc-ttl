@@ -11,6 +11,7 @@ import org.slf4j.TtlMDCAdapter;
 /**
  * Created by wuwen on 16/8/25.
  */
+@Deprecated
 public class TtlMdcListener extends ContextAwareBase implements LoggerContextListener, LifeCycle {
 
     @Override

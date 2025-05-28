@@ -6,9 +6,11 @@
 
 :point_right: `logback`扩展，支持跨线程池的mdc跟踪。
 
-> 实现上集成使用了[Transmittable ThreadLocal(TTL)](https://github.com/alibaba/transmittable-thread-local) ：在使用线程池等会缓存线程的组件情况下，提供ThreadLocal值的传递功能，解决异步执行时上下文传递的问题。支持JDK 9/8/7/6。
+> 实现上集成使用了[Transmittable ThreadLocal(TTL)](https://github.com/alibaba/transmittable-thread-local) ：在使用线程池等会缓存线程的组件情况下，提供ThreadLocal值的传递功能，解决异步执行时上下文传递的问题。支持JDK 17。
 
-# 示例
+
+---
+# JDK 17 + springboot3.x 示例
 
 ## 1.项目依赖
 
@@ -16,25 +18,36 @@
 <dependency>
     <groupId>com.ofpay</groupId>
     <artifactId>logback-mdc-ttl</artifactId>
-    <version>1.0.2</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
 ## 2. 在`Java`的启动参数加上：
 
 - `-Xbootclasspath/a:/path/to/transmittable-thread-local-2.x.x.jar`
-- `-javaagent:/path/to/transmittable-thread-local-2.x.x.jar`
+- `-javaagent:/path/to/transmittable-thread-local-2.x.x.jar`  
+- 强制指定使用哪个 SLF4JServiceProvider 实现，从而避免多个绑定时的不确定性问题
+- `-Dslf4j.provider=com.ofpay.logback.TtlSlf4JServiceProvider`
 
-## 3. 在logback配置文件中增加`TtlMdcListener`
+## 3. logback 示例
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration >
-    <!-- ...(略) -->
-    <contextListener class="com.ofpay.logback.TtlMdcListener"/>
+<configuration scan="true" scanPeriod="30 seconds">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--例子:  %X{uuid} 支持在跨线程池时传递-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%X{uuid}|%level|%M|%C:%L|%thread|%msg%n</pattern>
+        </encoder>
+    </appender>
 
-    <!--例子:  %X{uuid} 支持在跨线程池时传递-->
-    <property scope="context" name="APP_PATTERN"
-              value='%d{yyyy-MM-dd HH:mm:ss.SSS}|%X{uuid}|%level|%M|%C\:%L|%thread|%replace(%.-2000msg){"(\r|\n)","\t"}|"%.-2000ex{full}"%n'/>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <logger name="org.springframework" level="INFO" />
+    <logger name="com.ofpay" level="DEBUG" />
 </configuration>
 ```
+
+## 4. 单元测试
+- 参考test: `com.ofpay.logback.springboot3`
