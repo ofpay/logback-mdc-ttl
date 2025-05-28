@@ -12,17 +12,17 @@ import org.slf4j.spi.MDCAdapter;
  */
 public class TtlSlf4JServiceProvider extends LogbackServiceProvider {
 
-	private MDCAdapter ttlMDCAdapter;
+    private MDCAdapter ttlMDCAdapter;
 
-	@Override
-	public void initialize() {
-		this.ttlMDCAdapter = new TtlMDCAdapter();
-		super.initialize();
-		((LoggerContext)super.getLoggerFactory()).setMDCAdapter(ttlMDCAdapter);
-	}
+    @Override
+    public void initialize() {
+        this.ttlMDCAdapter = new TtlMDCAdapter();
+        super.initialize();
+        ((LoggerContext)super.getLoggerFactory()).setMDCAdapter(ttlMDCAdapter);
+    }
 
-	@Override
-	public MDCAdapter getMDCAdapter() {
-		return this.ttlMDCAdapter;
-	}
+    @Override
+    public MDCAdapter getMDCAdapter() {
+        return this.ttlMDCAdapter;
+    }
 }
