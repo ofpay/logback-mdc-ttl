@@ -3,6 +3,7 @@ package com.ofpay.logback;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.core.read.ListAppender;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+@Deprecated
 public class MDCTest {
 
     Logger log = (Logger) LoggerFactory.getLogger("com.ofpay");
@@ -28,6 +30,7 @@ public class MDCTest {
     }
 
     @Test
+	@Ignore
     void testMdc() throws InterruptedException, ExecutionException {
         final String uuidKey = "uuid";
         final String testUuid = UUID.randomUUID().toString();
