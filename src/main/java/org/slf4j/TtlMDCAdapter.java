@@ -11,7 +11,4 @@ import com.ofpay.logback.TtlLogbackMDCAdapter;
  */
 @Deprecated
 public class TtlMDCAdapter extends TtlLogbackMDCAdapter {
-    static {
-        MDC.mdcAdapter = TtlLogbackMDCAdapter.getInstance();
-    }
 }

@@ -18,7 +18,7 @@
 
         <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
         <spring-boot.version>3.3.7</spring-boot.version>
-        <logback.version>1.5.12</logback.version>
+        <logback.version>1.5.18</logback.version>
         <junit.version>4.13.2</junit.version>
         <junit-jupiter.version>5.12.2</junit-jupiter.version>
     </properties>
@@ -59,6 +59,12 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
             <version>${logback.version}</version>
             <scope>provided</scope>
         </dependency>
