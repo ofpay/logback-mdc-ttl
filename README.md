@@ -6,11 +6,13 @@
 
 :point_right: `logback`扩展，支持跨线程池的mdc跟踪。
 
-> 实现上集成使用了[Transmittable ThreadLocal(TTL)](https://github.com/alibaba/transmittable-thread-local) ：在使用线程池等会缓存线程的组件情况下，提供ThreadLocal值的传递功能，解决异步执行时上下文传递的问题。支持JDK 17。
+> 实现上集成使用了[Transmittable ThreadLocal(TTL)](https://github.com/alibaba/transmittable-thread-local) ：在使用线程池等会缓存线程的组件情况下，提供ThreadLocal值的传递功能，解决异步执行时上下文传递的问题。支持 `Java 11~21`。
 
+> [!NOTE]
+> 从`v2.0+`开始，升级到`Java 11`。🚀  
+> 如果需要`Java 8`的支持，使用版本`1.0.x`
 
 ---
-# JDK 17 + springboot3.x 示例
 
 ## 1.项目依赖
 
@@ -49,5 +51,5 @@
 </configuration>
 ```
 
-## 4. 单元测试
+## JDK 17 + springboot3.x 示例
 - 参考test: `com.ofpay.logback.springboot3`
