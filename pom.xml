@@ -2,25 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
+    <groupId>com.ofpay</groupId>
+    <artifactId>logback-mdc-ttl</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <git.url>https://github.com/ofpay/logback-mdc-ttl.git</git.url>
         <java.version>11</java.version>
+        <allowed.build.jdks>[11,23)</allowed.build.jdks>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
+        <extra-enforcer-rules.version>1.10.0</extra-enforcer-rules.version>
 
+        <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
         <spring-boot.version>3.3.7</spring-boot.version>
         <logback.version>1.5.12</logback.version>
+        <junit.version>4.13.2</junit.version>
+        <junit-jupiter.version>5.10.5</junit-jupiter.version>
     </properties>
-
-    <groupId>com.ofpay</groupId>
-    <artifactId>logback-mdc-ttl</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
 
     <licenses>
         <license>
@@ -38,23 +39,20 @@
         </developer>
     </developers>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/ofpay/logback-mdc-ttl/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>GitHub Actions</system>
+        <url>https://github.com/ofpay/logback-mdc-ttl/actions</url>
+    </ciManagement>
 
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
-            <version>2.14.5</version>
+            <version>${transmittable-thread-local.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -68,17 +66,65 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.2</version>
+            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
     </dependencies>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!--Enforcer插件提供了控制某些环境约束的目标，如Maven版本、JDK版本和OS系列，以及更多内置规则和用户创建的规则。-->
+                    <!--主要用于检测依赖包的JDK编译版本,避免依赖过高不兼容的版本-->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                    <configuration>
+                        <rules>
+                            <enforceBytecodeVersion>
+                                <maxJdkVersion>${java.version}</maxJdkVersion>
+                                <ignoredScopes>test</ignoredScopes>
+                            </enforceBytecodeVersion>
+                            <requireJavaVersion>
+                                <version>${allowed.build.jdks}</version>
+                            </requireJavaVersion>
+                        </rules>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>${extra-enforcer-rules.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
@@ -86,6 +132,17 @@
             <activation>
                 <jdk>[17,)</jdk>
             </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-dependencies</artifactId>
+                        <version>${spring-boot.version}</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
