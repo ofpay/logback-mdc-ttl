@@ -2,13 +2,12 @@ package com.ofpay.logback;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.LogbackServiceProvider;
-import org.slf4j.TtlMDCAdapter;
 import org.slf4j.spi.MDCAdapter;
 
 /**
  *
  * @author akihiro
- * @date 2025/05/28.
+ * @since 2.0.0
  */
 public class TtlSlf4JServiceProvider extends LogbackServiceProvider {
 
@@ -16,8 +15,8 @@ public class TtlSlf4JServiceProvider extends LogbackServiceProvider {
 
     @Override
     public void initialize() {
-        this.ttlMDCAdapter = new TtlMDCAdapter();
         super.initialize();
+        this.ttlMDCAdapter = TtlLogbackMDCAdapter.getInstance();
         ((LoggerContext)super.getLoggerFactory()).setMDCAdapter(ttlMDCAdapter);
     }
 
