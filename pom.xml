@@ -4,7 +4,7 @@
 
     <groupId>com.ofpay</groupId>
     <artifactId>logback-mdc-ttl</artifactId>
-    <version>2.0.0-RC.1</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -99,6 +99,22 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.8.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
                 <plugin>
                     <!--Enforcer插件提供了控制某些环境约束的目标，如Maven版本、JDK版本和OS系列，以及更多内置规则和用户创建的规则。-->
                     <!--主要用于检测依赖包的JDK编译版本,避免依赖过高不兼容的版本-->
@@ -205,6 +221,7 @@
             <properties>
                 <gpg.skip>false</gpg.skip>
                 <maven.test.skip>true</maven.test.skip>
+                <maven.javadoc.skip>true</maven.javadoc.skip>
             </properties>
             <activation>
                 <property>
@@ -216,9 +233,7 @@
                 <plugins>
                     <!-- GPG 签名插件 -->
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -229,12 +244,11 @@
                             </execution>
                         </executions>
                     </plugin>
-
-                    <!-- 部署插件 -->
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-deploy-plugin</artifactId>
-                        <version>3.1.2</version>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-source-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
