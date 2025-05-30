@@ -1,0 +1,55 @@
+name: Release to Maven Central
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version (e.g. 1.0.0)'
+        required: true
+      next_snapshot:
+        description: 'Next snapshot version (e.g. 1.0.1-SNAPSHOT)'
+        required: true
+
+jobs:
+  release:
+    name: Release and Deploy to Maven Central
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          server-id: ossrh
+          server-username: ${{ secrets.OSSRH_USERNAME }}
+          server-password: ${{ secrets.OSSRH_PASSWORD }}
+
+      - name: Set release version
+        run: |
+          mvn --batch-mode versions:set -DnewVersion=${{ github.event.inputs.release_version }}
+          mvn --batch-mode versions:commit
+
+      - name: Commit release version
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git commit -am "Release ${{ github.event.inputs.release_version }}"
+          git tag v${{ github.event.inputs.release_version }}
+          git push origin HEAD:master
+          git push origin v${{ github.event.inputs.release_version }}
+
+      - name: Deploy to OSSRH (Maven Central)
+        run: mvn --batch-mode deploy -P release -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Bump to next snapshot version
+        run: |
+          mvn --batch-mode versions:set -DnewVersion=${{ github.event.inputs.next_snapshot }}
+          mvn --batch-mode versions:commit
+          git commit -am "Prepare for next development iteration"
+          git push origin HEAD:master
