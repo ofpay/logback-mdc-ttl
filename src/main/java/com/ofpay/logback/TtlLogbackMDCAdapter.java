@@ -34,6 +34,10 @@ public class TtlLogbackMDCAdapter implements MDCAdapter {
         mtcMDCAdapter = new TtlLogbackMDCAdapter();
     }
 
+    /**
+     * Return the singleton instance of the MDCAdapter.
+     * @return the singleton instance of the MDCAdapter.
+     */
     public static MDCAdapter getInstance() {
         return mtcMDCAdapter;
     }
@@ -42,12 +46,10 @@ public class TtlLogbackMDCAdapter implements MDCAdapter {
      * Put a context value (the <code>val</code> parameter) as identified with the
      * <code>key</code> parameter into the current thread's context map. Note that
      * contrary to log4j, the <code>val</code> parameter can be null.
-     * <p/>
-     * <p/>
+     * <p>
      * If the current thread does not have a context map it is created as a side
      * effect of this call.
-     * <p/>
-     * <p/>
+     * </p>
      * Each time a value is added, a new instance of the map is created. This is
      * to be certain that the serialization process will operate on the updated
      * map and not send a reference to the old map, thus not allowing the remote
@@ -72,8 +74,6 @@ public class TtlLogbackMDCAdapter implements MDCAdapter {
 
     /**
      * Get the context identified by the <code>key</code> parameter.
-     * <p/>
-     * <p/>
      * This method has no side effects.
      */
     @Override
@@ -89,7 +89,7 @@ public class TtlLogbackMDCAdapter implements MDCAdapter {
 
     /**
      * <p>Remove the context identified by the <code>key</code> parameter.
-     * <p/>
+     * </p>
      */
     @Override
     public void remove(String key) {
@@ -122,6 +122,7 @@ public class TtlLogbackMDCAdapter implements MDCAdapter {
      * internally.</p>
      *
      * The returned map is unmodifiable (since version 1.3.2/1.4.2).
+     * @return a read-only view of the current thread's MDC map, or null if the
      */
     @SuppressWarnings("unchecked")
     public Map<String, String> getPropertyMap() {
@@ -154,6 +155,7 @@ public class TtlLogbackMDCAdapter implements MDCAdapter {
     /**
      * Returns the keys in the MDC as a {@link Set}. The returned value can be
      * null.
+     * @return the keys in the MDC as a {@link Set}. The returned value can be null.
      */
     public Set<String> getKeys() {
         Map<String, String> readOnlyMap = getPropertyMap();

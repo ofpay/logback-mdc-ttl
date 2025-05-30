@@ -4,6 +4,9 @@
 
     <groupId>com.ofpay</groupId>
     <artifactId>logback-mdc-ttl</artifactId>
+    <name>logback-mdc-ttl</name>
+    <description>`logback`扩展，支持跨线程池的mdc跟踪</description>
+    <url>https://github.com/ofpay/logback-mdc-ttl.git</url>
     <version>2.0.0-RC.2</version>
     <packaging>jar</packaging>
 
@@ -208,8 +211,8 @@
             <id>release</id>
             <properties>
                 <gpg.skip>false</gpg.skip>
+                <maven.javadoc.skip>false</maven.javadoc.skip>
                 <maven.test.skip>true</maven.test.skip>
-                <maven.javadoc.skip>true</maven.javadoc.skip>
             </properties>
             <activation>
                 <property>
