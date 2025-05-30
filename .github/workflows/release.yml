@@ -45,7 +45,7 @@ jobs:
           git push origin v${{ github.event.inputs.release_version }}
 
       - name: Deploy to OSSRH (Maven Central)
-        run: mvn --batch-mode deploy -P release -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+        run: mvn --batch-mode deploy -P release -DperformRelease=true -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
 
       - name: Bump to next snapshot version
         run: |
