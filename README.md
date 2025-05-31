@@ -1,5 +1,6 @@
 # logback-mdc-ttl
 
+[![Java CI](https://github.com/ofpay/logback-mdc-ttl/actions/workflows/ci.yml/badge.svg)](https://github.com/ofpay/logback-mdc-ttl/actions/workflows/ci.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.ofpay/logback-mdc-ttl/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.ofpay/logback-mdc-ttl/)
 [![GitHub release](https://img.shields.io/github/release/ofpay/logback-mdc-ttl.svg)](https://github.com/ofpay/logback-mdc-ttl/releases)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
