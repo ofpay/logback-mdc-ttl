@@ -114,7 +114,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-gpg-plugin</artifactId>
-                    <version>3.2.7</version>
+                    <version>3.2.8</version>
                 </plugin>
                 <plugin>
                     <!--Enforcer插件提供了控制某些环境约束的目标，如Maven版本、JDK版本和OS系列，以及更多内置规则和用户创建的规则。-->
